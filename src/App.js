@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
 import './App.css';
+import { Provider } from 'react-redux'
+import Routes from './routes'
+import axios from 'axios'
 
-function App() {
+
+function App(props) {
+
+  useEffect(() => {
+    axios.post('http://localhost:2020/api/v1/signin', {
+      email: 'i201520719@cibertec.edu.pe',
+      password: 'pancho123'
+    })
+    .then(rs => console.log('rs', rs))
+    .catch(e => console.log('err', e))
+  }, [])
+  console.log('propspropspropsprops', props)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={props.store}>
+      <Routes />
+    </Provider>
   );
 }
 
